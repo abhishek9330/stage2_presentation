@@ -8,18 +8,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg:       #fbfaf7;
-      --ink:      #1c1c1c;
-      --ink-soft: #4a4a4a;
-      --rule:     #e2ddd2;
-      --accent:   #8a3220;
+      --bg:         #faf7f1;
+      --bg-deep:    #f0ece2;
+      --ink:        #1a1815;
+      --ink-soft:   #4a4640;
+      --ink-faded:  #8a8478;
+      --rule:       #d9d3c3;
+      --accent:     #9a3a1f;       /* deep terracotta */
+      --accent-soft:#e8d5c5;
+      --teal:       #2c5f5d;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
@@ -30,40 +35,93 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 4rem 1.5rem 5rem;
+    /* subtle grain overlay for paper feel */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      opacity: 0.5;
     }
 
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ============ HEADER ============ */
     header {
+      padding: 4.5rem 0 3rem;
       text-align: center;
-      padding-bottom: 2.5rem;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      margin-bottom: 1.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .eyebrow::before, .eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 1px;
+      background: var(--ink-faded);
     }
 
     h1 {
       font-family: 'Fraunces', serif;
-      font-weight: 500;
-      font-size: clamp(1.8rem, 4.2vw, 2.6rem);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.6rem;
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.4rem;
       color: var(--ink);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
     }
 
     .authors {
-      font-size: 1rem;
-      color: var(--ink-soft);
-      margin-bottom: 0.4rem;
+      font-size: 0.98rem;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
     }
 
     .affiliation {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      font-style: italic;
-      margin-bottom: 1.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      margin-bottom: 2rem;
     }
 
     .links {
@@ -77,36 +135,142 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.55rem 1.1rem;
-      font-size: 0.88rem;
+      padding: 0.65rem 1.3rem;
+      font-size: 0.85rem;
       font-weight: 500;
+      letter-spacing: 0.02em;
       text-decoration: none;
       border-radius: 999px;
       background: var(--ink);
       color: var(--bg);
       border: 1px solid var(--ink);
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
     .btn:hover {
       background: var(--accent);
       border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
     }
 
     .btn svg { width: 14px; height: 14px; }
 
-    h2 {
+    /* decorative rule */
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: var(--ink-faded);
+      margin: 0 auto;
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .divider::before { left: -10px; }
+    .divider::after  { right: -10px; }
+
+    /* ============ HIGHLIGHTS ============ */
+    .highlights {
+      padding: 3rem 0;
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .highlight {
+      padding: 1.8rem 1.4rem;
+      border-right: 1px solid var(--rule);
+    }
+    .highlight:last-child { border-right: none; }
+
+    .highlight .num {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .highlight h3 {
       font-family: 'Fraunces', serif;
       font-weight: 500;
-      font-size: 1.5rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      margin-bottom: 0.55rem;
       color: var(--ink);
     }
 
+    .highlight p {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    /* ============ ABSTRACT ============ */
+    .abstract-section {
+      padding: 3rem 0 2rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 1.85rem;
+      letter-spacing: -0.015em;
+      margin-bottom: 1.8rem;
+      color: var(--ink);
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
     .abstract p {
-      font-size: 1.02rem;
-      line-height: 1.75;
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
       color: var(--ink-soft);
       margin-bottom: 1.1rem;
       text-align: justify;
@@ -115,46 +279,154 @@
 
     .abstract p:last-child { margin-bottom: 0; }
 
-    footer {
-      max-width: 760px;
+    .abstract p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ============ FRAMEWORK / SVG SECTION ============ */
+    .framework-section {
+      padding: 3rem 0;
+    }
+
+    .framework-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 2rem 1.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .framework-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 1.5rem;
-      border-top: 1px solid var(--rule);
-      font-size: 0.8rem;
+    }
+
+    .framework-caption {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 0.92rem;
       color: var(--ink-soft);
+      text-align: center;
+      margin-top: 1.4rem;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.55;
+    }
+
+    .framework-caption strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      padding: 2.5rem 0 2rem;
+      border-top: 1px solid var(--rule);
+      margin-top: 2rem;
+      font-size: 0.82rem;
+      color: var(--ink-faded);
       text-align: center;
     }
 
-    footer a { color: var(--ink-soft); }
-
-    @media (max-width: 640px) {
-      .container { padding: 2.5rem 1.2rem 3rem; }
-      .abstract p { text-align: left; }
+    footer a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-decoration-color: var(--rule);
+      text-underline-offset: 3px;
     }
+    footer a:hover { color: var(--accent); }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 700px) {
+      .container { padding: 0 1.2rem; }
+      header { padding: 3rem 0 2rem; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .highlight {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+      }
+      .highlight:last-child { border-bottom: none; }
+      .abstract p { text-align: left; }
+      .framework-card { padding: 1.4rem 1rem; }
+    }
+
+    /* ============ ANIMATION ============ */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header .eyebrow    { animation: riseIn 0.6s ease 0.05s backwards; }
+    header h1          { animation: riseIn 0.7s ease 0.15s backwards; }
+    header .tagline    { animation: riseIn 0.7s ease 0.3s backwards; }
+    header .authors,
+    header .affiliation { animation: riseIn 0.7s ease 0.45s backwards; }
+    header .links      { animation: riseIn 0.7s ease 0.6s backwards; }
   </style>
 </head>
 <body>
 
   <div class="container">
+
+    <!-- ============ HEADER ============ -->
     <header>
-      <h1>Data Driven Approach for Measuring Child Development</h1>
+      <div class="eyebrow">Dual Degree Project · 2025</div>
+
+      <h1>A Data-Driven Approach for Measuring <em>Child Development</em></h1>
+
+      <p class="tagline">
+        Recovering latent developmental ability from item-level responses, without relying on hand-designed scoring rubrics.
+      </p>
+
       <div class="authors">Your Name</div>
-      <div class="affiliation">Dual Degree Project · IIT</div>
+      <div class="affiliation">Indian Institute of Technology</div>
 
       <div class="links">
         <a href="static/pdfs/report.pdf" class="btn" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Report
         </a>
-        <a href="static/pdfs/presentation.pdf" class="btn" target="_blank">
+        <a href="static/pdfs/presentation.pdf" class="btn btn-ghost" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Slides
         </a>
       </div>
     </header>
 
-    <section>
-      <h2>Abstract</h2>
+    <div class="divider"></div>
+
+    <!-- ============ HIGHLIGHTS ============ -->
+    <section class="highlights">
+      <div class="highlights-grid">
+        <div class="highlight">
+          <div class="num">i.</div>
+          <h3>Unsupervised by design</h3>
+          <p>An IRT-constrained VAE that learns developmental ability directly from item-level responses — no rubric required.</p>
+        </div>
+        <div class="highlight">
+          <div class="num">ii.</div>
+          <h3>Three instruments, one scale</h3>
+          <p>Pools MDAT, DEEP and START across roughly 4,000 children and 1,000 features into a single latent space.</p>
+        </div>
+        <div class="highlight">
+          <div class="num">iii.</div>
+          <h3>Validated three ways</h3>
+          <p>Monotonic in age, sensitive to risk &amp; protective factors, and recovers GMDS clinical scores.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABSTRACT ============ -->
+    <section class="abstract-section">
+      <div class="section-label">Abstract</div>
+      <h2>The measurement problem, <em>reframed</em>.</h2>
+
       <div class="abstract">
         <p>Early childhood is a period of rapid cognitive, motor, and social development, and reliable measurement of these developmental trajectories is essential for identifying children at risk and informing early intervention. Existing assessment tools combine rich item-level response data with expert-designed scoring rubrics. While these rubrics are clinically grounded, they may not fully exploit the structure latent in the response data, and they require extensive adaptation across cultural and developmental contexts.</p>
 
@@ -167,10 +439,109 @@
         <p>We then propose a deployment strategy: MDAT for ages 0&ndash;3 and DEEP for ages 3&ndash;6, motivated by training cost, age-appropriateness, and alignment with the WHO Global Scales for Early Development (GSED). We treat START separately as a screening rather than scoring tool.</p>
       </div>
     </section>
+
+    <!-- ============ FRAMEWORK SVG ============ -->
+    <section class="framework-section">
+      <div class="section-label">Framework</div>
+      <h2>An IRT-constrained <em>VAE</em>.</h2>
+
+      <div class="framework-card">
+        <svg class="framework-svg" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a4640"/>
+            </marker>
+          </defs>
+
+          <!-- Input: responses -->
+          <g transform="translate(20, 60)">
+            <rect width="120" height="110" rx="4" fill="#faf7f1" stroke="#9a3a1f" stroke-width="1.5"/>
+            <text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8478" letter-spacing="1">INPUT</text>
+            <text x="60" y="50" text-anchor="middle" font-family="Fraunces, serif" font-size="14" fill="#1a1815" font-weight="500">Item-level</text>
+            <text x="60" y="68" text-anchor="middle" font-family="Fraunces, serif" font-size="14" fill="#1a1815" font-weight="500">responses</text>
+            <text x="60" y="92" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4640" font-style="italic">binary &amp; ordinal</text>
+            <!-- response dots -->
+            <g transform="translate(20, 100)">
+              <circle cx="0" cy="0" r="3" fill="#9a3a1f"/>
+              <circle cx="14" cy="0" r="3" fill="#9a3a1f" opacity="0.4"/>
+              <circle cx="28" cy="0" r="3" fill="#9a3a1f"/>
+              <circle cx="42" cy="0" r="3" fill="#9a3a1f" opacity="0.4"/>
+              <circle cx="56" cy="0" r="3" fill="#9a3a1f"/>
+              <circle cx="70" cy="0" r="3" fill="#9a3a1f" opacity="0.4"/>
+            </g>
+          </g>
+
+          <!-- Arrow 1 -->
+          <line x1="146" y1="115" x2="186" y2="115" stroke="#4a4640" stroke-width="1.3" marker-end="url(#arr)"/>
+
+          <!-- Encoder -->
+          <g transform="translate(190, 60)">
+            <path d="M 0 0 L 110 25 L 110 85 L 0 110 Z" fill="#f0ece2" stroke="#4a4640" stroke-width="1.3"/>
+            <text x="55" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8478" letter-spacing="1">ENCODER</text>
+            <text x="55" y="62" text-anchor="middle" font-family="Fraunces, serif" font-size="14" fill="#1a1815" font-weight="500">VAE</text>
+            <text x="55" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4640" font-style="italic">q(z | x)</text>
+          </g>
+
+          <!-- Arrow 2 -->
+          <line x1="306" y1="115" x2="346" y2="115" stroke="#4a4640" stroke-width="1.3" marker-end="url(#arr)"/>
+
+          <!-- Latent z -->
+          <g transform="translate(350, 75)">
+            <circle cx="40" cy="40" r="42" fill="#fbf3ec" stroke="#9a3a1f" stroke-width="1.5"/>
+            <text x="40" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8478" letter-spacing="1">LATENT</text>
+            <text x="40" y="48" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-style="italic" fill="#9a3a1f" font-weight="500">θ</text>
+            <text x="40" y="66" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#4a4640">ability</text>
+          </g>
+
+          <!-- Arrow 3 -->
+          <line x1="434" y1="115" x2="474" y2="115" stroke="#4a4640" stroke-width="1.3" marker-end="url(#arr)"/>
+
+          <!-- Decoder (IRT) -->
+          <g transform="translate(478, 60)">
+            <path d="M 0 25 L 110 0 L 110 110 L 0 85 Z" fill="#f0ece2" stroke="#4a4640" stroke-width="1.3"/>
+            <text x="55" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8478" letter-spacing="1">DECODER</text>
+            <text x="55" y="62" text-anchor="middle" font-family="Fraunces, serif" font-size="14" fill="#1a1815" font-weight="500">IRT</text>
+            <text x="55" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4640" font-style="italic">2PL · GRM</text>
+          </g>
+
+          <!-- Arrow 4 -->
+          <line x1="594" y1="115" x2="634" y2="115" stroke="#4a4640" stroke-width="1.3" marker-end="url(#arr)"/>
+
+          <!-- Output: reconstructed responses -->
+          <g transform="translate(638, 60)">
+            <rect width="60" height="110" rx="4" fill="#faf7f1" stroke="#2c5f5d" stroke-width="1.5"/>
+            <text x="30" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8478" letter-spacing="1">x̂</text>
+            <text x="30" y="58" text-anchor="middle" font-family="Fraunces, serif" font-size="11" fill="#1a1815" font-weight="500">recon</text>
+            <g transform="translate(15, 80)">
+              <circle cx="0" cy="0" r="3" fill="#2c5f5d"/>
+              <circle cx="14" cy="0" r="3" fill="#2c5f5d" opacity="0.5"/>
+              <circle cx="0" cy="14" r="3" fill="#2c5f5d" opacity="0.5"/>
+              <circle cx="14" cy="14" r="3" fill="#2c5f5d"/>
+            </g>
+          </g>
+
+          <!-- Masking annotation -->
+          <g transform="translate(170, 195)">
+            <line x1="0" y1="0" x2="430" y2="0" stroke="#9a3a1f" stroke-width="0.8" stroke-dasharray="3 3"/>
+            <text x="215" y="18" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#9a3a1f" font-style="italic">reconstruction loss · masked for missing items</text>
+          </g>
+
+          <!-- Top label -->
+          <text x="360" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#8a8478" letter-spacing="2">END-TO-END · UNSUPERVISED</text>
+        </svg>
+
+        <p class="framework-caption">
+          A neural encoder maps response patterns into a latent ability <strong>θ</strong>; an IRT decoder (<strong>2PL</strong> for binary, <strong>GRM</strong> for ordinal items) is constrained to preserve psychometric structure. Missing items are masked in the reconstruction loss.
+        </p>
+      </div>
+    </section>
+
   </div>
 
   <footer>
-    Template adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page</a>.
+    <div class="container">
+      Template adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page</a> · CC BY-SA 4.0
+    </div>
   </footer>
 
 </body>
