@@ -397,41 +397,19 @@
 
     <div class="divider"></div>
 
-    <!-- ============ HIGHLIGHTS ============ -->
-    <section class="highlights">
-      <div class="highlights-grid">
-        <div class="highlight">
-          <div class="num">i.</div>
-          <h3>Unsupervised by design</h3>
-          <p>An IRT-constrained VAE that learns developmental ability directly from item-level responses — no rubric required.</p>
-        </div>
-        <div class="highlight">
-          <div class="num">ii.</div>
-          <h3>Three instruments, one scale</h3>
-          <p>Derives latent metric representative of neurodevelopment score</p>
-        </div>
-        <div class="highlight">
-          <div class="num">iii.</div>
-          <h3>Validated three ways</h3>
-          <p>Monotonic in age, sensitive to risk &amp; protective factors, and recovers GMDS clinical scores.</p>
-        </div>
-      </div>
-    </section>
-
+    
     <!-- ============ ABSTRACT ============ -->
     <section class="abstract-section">
       <div class="section-label">Abstract</div>
 
       <div class="abstract">
-        <p>Early childhood is a period of rapid cognitive, motor, and social development, and reliable measurement of these developmental trajectories is essential for identifying children at risk and informing early intervention. Existing assessment tools combine rich item-level response data with expert-designed scoring rubrics. While these rubrics are clinically grounded, they may not fully exploit the structure latent in the response data, and they require extensive adaptation across cultural and developmental contexts.</p>
-
-        <p>This report develops a data-driven framework for measuring child development directly from item-level responses. The data comes from three instruments: MDAT (Malawi Developmental Assessment Tool), DEEP (Developmental Assessment on an E-Platform), and START (Screening Tool for Autism Risk using Technology). Together they yield approximately 4{,}000 subjects across roughly 1{,}000 features, with the vast majority of children exhibiting prototypically neurotypical development.</p>
-
-        <p>We propose an unsupervised probabilistic generative model that combines Item Response Theory (IRT) with a Variational Autoencoder (VAE). The encoder maps high-dimensional response patterns to a low-dimensional latent ability space, and the decoder is constrained to follow a 2-Parameter Logistic (2PL) IRT model for binary items and a Graded Response Model (GRM) for ordinal items. The framework handles missingness natively through a masking mechanism on the reconstruction loss. Training is fast and runs on commodity hardware.</p>
-
-        <p>We validate the learned latent measures along three axes. First, they are strongly monotonic in chronological age, confirming that they track genuine developmental progress. Second, they correlate in the expected directions with adverse-childhood and protective covariates. Third, a thin neural network maps latent representations to the Griffiths Mental Development Scales (GMDS), establishing criterion validity against an established clinical instrument.</p>
-
-        <p>We then propose a deployment strategy: MDAT for ages 0&ndash;3 and DEEP for ages 3&ndash;6, motivated by training cost, age-appropriateness, and alignment with the WHO Global Scales for Early Development (GSED). We treat START separately as a screening rather than scoring tool.</p>
+      <p>
+        Early childhood is a period of rapid cognitive, motor, and social development, and reliable measurement of these developmental trajectories is essential for identifying children at risk and informing early intervention. Existing assessment tools combine rich item-level response data with expert-designed scoring rubrics. While these rubrics are often clinically grounded, they may not fully exploit the structure latent in the response data; further they require adaptation across cultural and developmental contexts.This report develops a data-driven framework for measuring child development directly from item-level responses from approximately 4,000 subjects aged 0-6, with the vast majority of children exhibiting prototypically neurotypical development.
+      </p>
+        <p>
+          We propose an unsupervised probabilistic generative model that combines traditional psychometric statistical methods  with a Variational Autoencoder (VAE). The encoder maps high-dimensional response patterns to a low-dimensional latent ability space, and the decoder is constrained to follow a 2-Parameter Logistic model for binary items and a graded response model for ordinal items. Training is fast and runs on commodity hardware.We validate the learned latent measures along three axes. First, they are strongly monotonic in chronological age, confirming that they track genuine developmental progress. Second, they correlate in the expected directions with adverse-childhood and protective covariates. Third, a thin neural network maps latent representations to the Griffiths Mental Development Scales (GMDS), establishing criterion validity against an established clinical instrument.
+          Finally, we then propose a deployment strategy: MDAT for ages 0--3 and DEEP for ages 3--6, motivated by training cost, age-appropriateness, and alignment with the WHO Global Scales for Early Development (GSED).
+        </p>
       </div>
     </section>
 
